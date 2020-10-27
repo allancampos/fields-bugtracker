@@ -1,7 +1,10 @@
+//Using express 
 const express = require('express');
 const app = express();
 
-const port = 3000;
+//define hostname and port
+const hostname = '0.0.0.0';
+const port = process.env.PORT || 3000;
 
 app.get('/',(req,res) => {
     res.statusCode = 200;
@@ -10,5 +13,5 @@ app.get('/',(req,res) => {
 })
 
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+    console.log(`Server running at http://${hostname}:${port}`);
 })
