@@ -6,7 +6,7 @@ module.exports = () => {
     };
 
     const getEmail = async (req,res) => {
-        res.json(await users.get(req.params.email));
+        res.json(await users.get(req.params.name));
     };
     
     const insertController = async (req,res) => {

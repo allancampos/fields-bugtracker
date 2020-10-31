@@ -37,8 +37,63 @@ module.exports = () => {
         })
     }
 
+    const ndocs = (collection) => {
+        return new Promise((resolve,reject) => {
+            MongoClient.connect(uri, MONGO_OPTIONS, (err, client) => {
+                
+                const db = client.db(DB_NAME);
+                const coll = db.collection(collection);
+
+                coll.countDocuments({}, (err, result) => {
+                    resolve(result);
+                    client.close();
+                })
+            });
+
+        })
+    }
+
+    const update = (collection, pipeline) => {
+        return new Promise((resolve,reject) => {
+            MongoClient.connect(uri, MONGO_OPTIONS, (err, client) => {
+                
+                const db = client.db(DB_NAME);
+                const coll = db.collection(collection);
+
+                coll.updateOne(pipeline[0] , pipeline[1], (err, result) => {
+                    resolve(result);
+                    client.close();
+                })
+            });
+
+        })
+    }
+
+    const aggregate = (collection, pipeline=[]) => {
+        return new Promise((resolve,reject) => {
+            MongoClient.connect(uri, MONGO_OPTIONS, (err, client) => {
+                
+                const db = client.db(DB_NAME);
+                const coll = db.collection(collection);
+
+                coll.aggregate(pipeline).toArray((err,documents) => {
+                    if(err){
+                        console.log(err);
+                    }
+                    
+                    resolve(documents);
+                    client.close();
+                })
+            });
+
+        })
+    }
+    
     return {
         get,
-        insert
+        insert,
+        ndocs,
+        update,
+        aggregate
     };
 }
