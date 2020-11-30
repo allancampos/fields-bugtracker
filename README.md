@@ -33,11 +33,11 @@ Link demo: https://fields-bugtracker.herokuapp.com/
 ## Features
 List of features ready and TODOs for future development
 * Add users, projects, issues and comments
-* retrieving all and individual list elements
+* Retrieving all and individual list elements
 
 GET METHODS <br/>
 Get all users /users  <br/>
-Get a user by email /users/:email <br/>
+Get an user by email /users/:email <br/>
 Get all projects /projects <br/>
 Get a single project /projects/:slug <br/>
 Get all issues /issues <br/>
@@ -47,7 +47,7 @@ Get all comments for an issue /issues/:issueNumber/comments <br/>
 Get a single comment /issues/:issueNumber/comments/:commentId <br/>
 
 POST METHODS <br/>
-Insert a user /users <br/>
+Insert an user /users <br/>
 Insert a project /projects <br/>
 Insert a issue for a project /projects/:slugNumber/issues <br/>
 Insert a comment /issues/:issueNumber/comments <br/>
