@@ -36,21 +36,21 @@ List of features ready and TODOs for future development
 * retrieving all and individual list elements
 
 GET METHODS <br/>
-Get all users /users
-Get a user by email /users/:email
-Get all projects /projects
-Get a single project /projects/:slug
-Get all issues /issues
-Get a issue by issueNumber /issues/:issueNumber
-Get all issues for a project /projects/:issueNumber/issues
-Get all comments for an issue /issues/:issueNumber/comments
-Get a single comment /issues/:issueNumber/comments/:commentId
+Get all users /users  <br/>
+Get a user by email /users/:email <br/>
+Get all projects /projects <br/>
+Get a single project /projects/:slug <br/>
+Get all issues /issues <br/>
+Get a issue by issueNumber /issues/:issueNumber <br/>
+Get all issues for a project /projects/:issueNumber/issues <br/>
+Get all comments for an issue /issues/:issueNumber/comments <br/>
+Get a single comment /issues/:issueNumber/comments/:commentId <br/>
 
 POST METHODS <br/>
-Insert a user /users
-Insert a project /projects
-Insert a issue for a project /projects/:slugNumber/issues
-Insert a comment /issues/:issueNumber/comments
+Insert a user /users <br/>
+Insert a project /projects <br/>
+Insert a issue for a project /projects/:slugNumber/issues <br/>
+Insert a comment /issues/:issueNumber/comments <br/>
 
 ## Status
 Project is: _in progress_,
