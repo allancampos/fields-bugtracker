@@ -5,19 +5,45 @@ const collection = 'projects';
 module.exports = () => {
     
     const get = async (slug = null) => {
-        if(!slug){
+        try{
+            if(!slug){
 
-            const projects = await db.get(collection);
-
-            return projects;
+                const project  = await db.get(collection);
+    
+                return {project };
+            }
+    
+            const project = await db.get(collection, {slug});
+            return {project};
+        }catch(err){
+            return {
+                error: err,
+            };
         }
-
-        const project = await db.get(collection, {slug});
-        return project;
     }
 
     const insert = async (slug, name, description) => {
-        const result = await db.insert(collection, { slug : slug, name: name, description: description });
+        if(!slug || !name || !description) {
+            return {
+                error: 'fill in all fields',
+            };
+        }
+        try{
+            const slugName = await db.get(COLLECTION, {
+                slug: slug,
+            });
+            if (slugName.length > 0) {
+                return {
+                    result: 'This project exists',
+                };
+            }
+            const result = await db.insert(collection, { slug : slug, name: name, description: description });
+            return {result};
+        }catch(err){
+            return{
+                error: err,
+            }
+        }
     }
 
     return{

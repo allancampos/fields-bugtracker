@@ -5,47 +5,71 @@ const collection = 'issues';
 module.exports = () => {
     
     const get = async (issueNumber = null) => {
-        const pipeline = [
-            {$match: {"issueNumber": issueNumber}}, 
-            {$project: 
-                { comments: 1, 
-                    _id: 0, 
-                    issueNumber: 1
+        try{
+            const pipeline = [
+                {$match: {"issueNumber": issueNumber}}, 
+                {$project: 
+                    { comments: 1, 
+                        _id: 0, 
+                        issueNumber: 1
+                    }
                 }
-            }
-        ]
+            ];
 
-        const comments = await db.aggregate(collection, pipeline);
-        return comments;
+            const comment = await db.aggregate(collection, pipeline);
+            return {comment};
+        }catch(err){
+            return{
+                error: err,
+            }
+        }
     }
 
     const getComment = async (id) => {
-        const pipeline = [
-        {$match: { 
-            'comments._id': ObjectID(id)
-        }}, 
-        {$project: { 
-            comments: { $filter: 
-            {
-                input: '$comments', 
-                as: 'comment', 
-                cond: {$eq: ['$$comment._id', ObjectID(id)]}
-            }},
-            _id: 0,
-            issueNumber: 1
-        }} ]
         
-        const comments = await db.aggregate(collection, pipeline);
-        return comments;
+        try{
+            const pipeline = [
+                {$match: { 
+                    'comments._id': ObjectID(id)
+                }}, 
+                {$project: { 
+                    comments: { $filter: 
+                    {
+                        input: '$comments', 
+                        as: 'comment', 
+                        cond: {$eq: ['$$comment._id', ObjectID(id)]}
+                    }},
+                    _id: 0,
+                    issueNumber: 1
+                }} ]
+                
+                const comment = await db.aggregate(collection, pipeline);
+                return {comment};
+        }catch(err){
+            return{
+                error: err,
+            }
+        }
     }
 
     
 
     const updateComment = async (issueNumber, text, author) => {
-        const pipeline = [{issueNumber: issueNumber}, {$push:{comments:{ _id: new ObjectID(), text: text, author: author }}}]
-        const results = await db.update(collection,pipeline);
+        if(!issueNumber || !text || !author ) {
+            return {
+                error: 'fill in all fields',
+            };
+        }
+        try{
+            const pipeline = [{issueNumber: issueNumber}, {$push:{comments:{ _id: new ObjectID(), text: text, author: author }}}]
+            const results = await db.update(collection,pipeline);
 
-        return results.result;
+            return {results};
+        }catch(err){
+            return{
+                error: err,
+            }
+        }
     }
 
     return{
